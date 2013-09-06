@@ -7,6 +7,7 @@ Installation:
 
 - Copy owseo in extension directory
 - Regenerate autoloads : php bin/php/ezpgenerateautoloads.php -e
+- Enable the extension in site.ini
 
 Usage
 ------------
