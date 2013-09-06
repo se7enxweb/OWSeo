@@ -9,8 +9,8 @@ OWSeo provides a datatype for Search Engine Optimisation.
 
 It will provides you a datatype with fields :
 - Title : for HTML tag <title></title>
-- Description : for <meta name="description" content="" />
-- Keywords : for <meta name="keywords" content="" />
+- Description : for meta description
+- Keywords : for meta keywords
 
 If some content exists in these fields, it will overwrite default value.
  
