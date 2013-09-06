@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<software>
+    <metadata>
+        <name>OWSeo</name>
+        <version>1.0</version>
+        <copyright>Copyright (C) 2013 OPEN WIDE</copyright>
+        <license>GNU General Public License v3.0</license>
+        <info_url>https://github.com/Open-Wide/OWSeo/</info_url>
+    </metadata>
+</software>
