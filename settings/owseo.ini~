@@ -5,7 +5,6 @@ MaxTitle=255
 MaxDescription=500
 
 #[Rules]
-#Rule_folder[<seo_type>]=Some text with dynamic [[<attribute_identifier>]] content
 #Rule_folder[title]=Folder [[name]]
 #Rule_folder[keywords]=Keywords [[name]]
 #Rule_folder[description]=Description [[name]]

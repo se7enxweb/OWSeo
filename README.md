@@ -20,7 +20,7 @@ Usage
 
 2. Create global rules needed in settings/owseo.ini
 You can set global rules for a specifi content class.
-It's also possible to use attribute names like "[[attribute_name]]" in rules to create dynamic content.
+It's also possible to use attribute names like "[[<attribute_identifier>]]" in rules to create dynamic content.
 
 3. Add owseo into AdditionalSiteDesignList in site.ini, or overwrite page_head.tpl.
 
