@@ -194,6 +194,9 @@ class OWSeoOperator {
                 // No overrided data => default value
                 $seoValues[ $seoType ] = '';
             }
+            // FIX if PathString is empty
+            $seoValues[ $seoType ] = str_replace($charVariableStart . $seoSettings['PathVarName'] . $charVariableEnd, '', $seoValues[ $seoType ]);
+
             $seoValues[ $seoType ] = substr($seoValues[ $seoType ], 0, $maxLengthSettings[ $seoType ]);
         }
 
