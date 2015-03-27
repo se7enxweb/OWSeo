@@ -198,6 +198,7 @@ class OWSeoOperator {
             if (!$availableVariables[$seoSettings['PathVarName']]) {
                 $seoValues[$seoType] = str_replace($charVariableStart . $seoSettings['PathVarName'] . $charVariableEnd, '', $seoValues[$seoType]);
             }
+            $seoValues[ $seoType ] = strip_tags($seoValues[ $seoType ]);
 
             $seoValues[ $seoType ] = substr($seoValues[ $seoType ], 0, $maxLengthSettings[ $seoType ]);
         }
