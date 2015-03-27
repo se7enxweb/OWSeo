@@ -2,16 +2,11 @@
 {cache-block keys=array($cache_uri)}
     {default enable_help=true() enable_link=true() canonical_link=true()}
     
-    {def
-        $seo_title = seo_title($module_result.node_id)
-        $seo_description = seo_meta_description($module_result.node_id)
-        $seo_keywords = seo_meta_keywords($module_result.node_id)
-    }
+    {def $seo_metadata = seo_metadata($module_result.node_id)}
 
-    {if $seo_title}
-        <title>{$seo_title|wash}</title>
+    {if $seo_metadata.title}
+        <title>{$seo_metadata.title|wash}</title>
     {else}
-    
         {if is_set($module_result.content_info.persistent_variable.site_title)}
             {set scope=root site_title=$module_result.content_info.persistent_variable.site_title}
         {else}
@@ -28,7 +23,7 @@
           {/section}
         
         {set-block scope=root variable=site_title}
-        {section loop=$Path:reverse_path}{$:item.text|wash}{delimiter} / {/delimiter}{/section} - {$site.title|wash}
+        {section loop=$Path:reverse_path}{$:item.text|wash}{delimiter} / {/delimiter}{/section} | {$site.title|wash}
         {/set-block}
         
         {/let}
@@ -36,7 +31,6 @@
     
         <title>{$site_title}</title>
     {/if}
-    
         {if and(is_set($#Header:extra_data),is_array($#Header:extra_data))}
           {section name=ExtraData loop=$#Header:extra_data}
           {$:item}
@@ -53,17 +47,17 @@
     
         {/foreach}
         {foreach $site.meta as $key => $item}
-           {if and($key|eq('description'), $seo_description)}
-           <meta name="{$key|wash}" content="{$seo_description|wash}" />
-           {elseif and($key|eq('keywords'), $seo_keywords)}
-           <meta name="{$key|wash}" content="{$seo_keywords|wash}" />
-           {else}
-               {if is_set( $module_result.content_info.persistent_variable[$key] )}
-            <meta name="{$key|wash}" content="{$module_result.content_info.persistent_variable[$key]|wash}" />
+            {if and($key|eq('description'), $seo_metadata.description)}
+                <meta name="{$key|wash}" content="{$seo_metadata.description|wash}" />
+            {elseif and($key|eq('keywords'), $seo_metadata.keywords)}
+                <meta name="{$key|wash}" content="{$seo_metadata.keywords|wash}" />
+            {else}
+                {if is_set( $module_result.content_info.persistent_variable[$key] )}
+                    <meta name="{$key|wash}" content="{$module_result.content_info.persistent_variable[$key]|wash}" />
                 {else}
-            <meta name="{$key|wash}" content="{$item|wash}" />
+                    <meta name="{$key|wash}" content="{$item|wash}" />
                 {/if}
-           {/if}
+            {/if}
         {/foreach}
     
         <meta name="MSSmartTagsPreventParsing" content="TRUE" />
