@@ -82,10 +82,13 @@ class OWSeoOperator {
 		$rules 			= array();
 		$seoValues 		= array();
 		$dataMap 		= array();
-		
-		if ($iniSeo->hasVariable('Rules', 'Rule_' . $classIdentifier)) {
-			$rules = $iniSeo->variable('Rules', 'Rule_' . $classIdentifier);
-		}
+
+    foreach ($seoTypes as $seoType) {
+        if ($iniSeo->hasVariable('Rules_' . $classIdentifier, $seoType)) {
+            $rules[ $seoType ] = $iniSeo->variable('Rules_' . $classIdentifier, $seoType);
+        }
+    }
+
 		
 		if ( isset($node) && $node instanceof eZContentObjectTreeNode ) {
 			$dataMap = $node->dataMap();
