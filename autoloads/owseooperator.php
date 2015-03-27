@@ -134,13 +134,13 @@ class OWSeoOperator {
 
             // Construct pathString
             $pathArray = $node->pathArray();
-            $nbLevels = 0;
+            $currentLevel = 1;
             for ($depth = $node->Depth-1; $depth >= $seoSettings['PathStringMinDepth']; $depth--) {
                 $pathNode = eZContentObjectTreeNode::fetch( $pathArray[$depth] );
                 $path[] = $pathNode->Name;
 
-                $nbLevels++;
-                if ($nbLevels > $seoSettings['PathStringMaxLevels']) {
+                $currentLevel++;
+                if ($currentLevel > $seoSettings['PathStringMaxLevels']) {
                     break;
                 }
             }
@@ -195,7 +195,9 @@ class OWSeoOperator {
                 $seoValues[ $seoType ] = '';
             }
             // FIX if PathString is empty
-            $seoValues[ $seoType ] = str_replace($charVariableStart . $seoSettings['PathVarName'] . $charVariableEnd, '', $seoValues[ $seoType ]);
+            if (!$availableVariables[$seoSettings['PathVarName']]) {
+                $seoValues[$seoType] = str_replace($charVariableStart . $seoSettings['PathVarName'] . $charVariableEnd, '', $seoValues[$seoType]);
+            }
 
             $seoValues[ $seoType ] = substr($seoValues[ $seoType ], 0, $maxLengthSettings[ $seoType ]);
         }
