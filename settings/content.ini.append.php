@@ -4,7 +4,4 @@
 ExtensionDirectories[]=owseo
 AvailableDataTypes[]=owseo
 
-[ClassAttributeSettings]
-CategoryList[seo]=SEO
-
 */ ?>
