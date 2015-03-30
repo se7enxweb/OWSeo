@@ -50,7 +50,9 @@
             {if and($key|eq('description'), $seo_metadata.description)}
                 <meta name="{$key|wash}" content="{$seo_metadata.description|wash}" />
             {elseif and($key|eq('keywords'), $seo_metadata.keywords)}
-                <meta name="{$key|wash}" content="{$seo_metadata.keywords|wash}" />
+                {if ezini('GeneralSettings', 'UseMetaKeywords', 'owseo.ini')|ne('false')}
+                    <meta name="{$key|wash}" content="{$seo_metadata.keywords|wash}" />
+                {/if}
             {else}
                 {if is_set( $module_result.content_info.persistent_variable[$key] )}
                     <meta name="{$key|wash}" content="{$module_result.content_info.persistent_variable[$key]|wash}" />

@@ -12,9 +12,11 @@
 	    <th>{'Description'|i18n( 'design/standard/content/datatype' )}</th>
 	    <td>{cond($attribute.content.description, $attribute.content.description|wash(), concat('<i>', $metadata.description|wash(), '</i>'))}</td>
     </tr>
+    {if ezini('GeneralSettings', 'UseMetaKeywords', 'owseo.ini')|ne('false')}
 	<tr>
 	    <th>{'Keywords'|i18n( 'design/standard/content/datatype' )}</th>
         <td>{cond($attribute.content.keywords, $attribute.content.keywords|wash(), concat('<i>', $metadata.keywords|wash(), '</i>'))}</td>
 	</tr>
+    {/if}
 </table>
 {/if}
