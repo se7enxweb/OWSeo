@@ -29,12 +29,17 @@ class OWSeoOperator {
                     'required' => false,
                     'default' => null,
                 ),
-                ),
-                'seo_metadata' => array(
-                    'node_id' => array(
+            ),
+            'seo_metadata' => array(
+                'node_id' => array(
                     'type' => 'int',
                     'required' => true,
                     'default' => null,
+                ),
+                'replacements' => array(
+                    'type' => 'mixed',
+                    'required' => false,
+                    'default' => array(),
                 ),
             ),
         );
@@ -45,7 +50,8 @@ class OWSeoOperator {
         switch ($operatorName) {
             case 'seo_metadata' :
                 $node_id = $namedParameters['node_id'];
-                $operatorValue = $this->seoMetaData($node_id);
+                $replacements = $namedParameters['replacements'];
+                $operatorValue = $this->seoMetaData($node_id, $replacements);
                 break;
 
             case 'seo_parse' :
@@ -66,12 +72,20 @@ class OWSeoOperator {
     OPERATORS
     *********************************************************************/
 
-    function seoMetaData( $nodeId ) {
+    function seoMetaData( $nodeId, $replacements = array() ) {
 
         $node = eZContentObjectTreeNode::fetch( $nodeId );
 
         if ( $node instanceof eZContentObjectTreeNode ) {
-            return $this->seoParse($node->ClassIdentifier, $node);
+            $metaDataArray = $this->seoParse($node->ClassIdentifier, $node);
+
+            // Replacement of other variables (i.e. used on full view with ezpagedata_set, view_parameters var)
+            foreach ($metaDataArray as $metaDataKey => $metaDataValue) {
+                foreach ($replacements as $varToReplace => $value) {
+                    $metaDataArray[$metaDataKey] = str_replace('{' . $varToReplace . '}', $value, $metaDataArray[$metaDataKey]);
+                }
+            }
+            return $metaDataArray;
         }
         return false;
     }
