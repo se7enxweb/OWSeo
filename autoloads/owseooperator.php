@@ -171,6 +171,17 @@ class OWSeoOperator {
         $availableVariables[$seoSettings['PathVarName']] = implode($seoSettings['PathStringSeparator'], $path);
         foreach ( array_keys($dataMap) as $attributeName ) {
             $availableVariables[$attributeName] = $dataMap[ $attributeName ]->content();
+            switch (get_class( $availableVariables[$attributeName] )) {
+                case 'eZXMLText' :
+                    $availableVariables[$attributeName] = $availableVariables[$attributeName]->attribute('input')->ContentObjectAttribute->DataText;
+                    break;
+                case 'eZDate' :
+                case 'eZDateTime' :
+                    $availableVariables[$attributeName] = $availableVariables[$attributeName]->toString();
+                    break;
+                default :
+                    break;
+            }
         }
 
         foreach ( $seoTypes as $seoType) {
@@ -213,10 +224,10 @@ class OWSeoOperator {
                 $seoValues[$seoType] = str_replace($charVariableStart . $seoSettings['PathVarName'] . $charVariableEnd, '', $seoValues[$seoType]);
             }
             $seoValues[ $seoType ] = strip_tags($seoValues[ $seoType ]);
-
-            $seoValues[ $seoType ] = substr($seoValues[ $seoType ], 0, $maxLengthSettings[ $seoType ]);
+            $seoValues[ $seoType ] = preg_replace("/[\r\n]+/", " ", $seoValues[ $seoType ]);
+            $seoValues[$seoType] = str_replace("  ", " ", $seoValues[ $seoType ]);
+            $seoValues[ $seoType ] = trim(substr($seoValues[ $seoType ], 0, $maxLengthSettings[ $seoType ]));
         }
-
         return $seoValues;
     }
 }
