@@ -169,17 +169,21 @@ class OWSeoOperator {
             $availableVariables[$k] = $v;
         }
         $availableVariables[$seoSettings['PathVarName']] = implode($seoSettings['PathStringSeparator'], $path);
-        foreach ( array_keys($dataMap) as $attributeName ) {
-            $availableVariables[$attributeName] = $dataMap[ $attributeName ]->content();
-            switch (get_class( $availableVariables[$attributeName] )) {
-                case 'eZXMLText' :
-                    $availableVariables[$attributeName] = $availableVariables[$attributeName]->attribute('input')->ContentObjectAttribute->DataText;
+    	foreach ( array_keys($dataMap) as $attributeName ) {
+            $content = $dataMap[ $attributeName ]->content();
+            switch ( $dataMap[$attributeName]->DataTypeString ) {
+                case 'ezxmltext' :
+                    $availableVariables[$attributeName] = $content->attribute('input')->ContentObjectAttribute->DataText;
                     break;
-                case 'eZDate' :
-                case 'eZDateTime' :
-                    $availableVariables[$attributeName] = $availableVariables[$attributeName]->toString();
+                case 'ezdate' :
+                case 'ezdatetime' :
+                    $availableVariables[$attributeName] = $content->toString();
+                    break;
+                case 'owenhancedselection' :
+                	$availableVariables[$attributeName] = $content['to_string'];
                     break;
                 default :
+                	$availableVariables[$attributeName] = $content;
                     break;
             }
         }
