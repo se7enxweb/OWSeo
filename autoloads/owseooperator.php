@@ -85,6 +85,16 @@ class OWSeoOperator {
                     $metaDataArray[$metaDataKey] = str_replace('{' . $varToReplace . '}', $value, $metaDataArray[$metaDataKey]);
                 }
             }
+            
+            $iniSeo = eZIni::instance('owseo.ini');
+            $charVariableStart = $iniSeo->variable('GeneralSettings', 'CharVariableStart');
+            $charVariableEnd = $iniSeo->variable('GeneralSettings', 'CharVariableEnd');
+            
+            $regex = "/" . $charVariableStart . "([^" . $charVariableStart . "]+)" . $charVariableEnd . "/";
+            foreach ($metaDataArray as $metaDataKey => $metaDataValue) {
+            	$metaDataArray[$metaDataKey] = preg_replace($regex, '', $metaDataValue);
+            }
+            
             return $metaDataArray;
         }
         return false;
