@@ -183,7 +183,7 @@ class OWSeoOperator {
             $content = $dataMap[ $attributeName ]->content();
             switch ( $dataMap[$attributeName]->DataTypeString ) {
                 case 'ezxmltext' :
-                    $availableVariables[$attributeName] = $content->attribute('input')->ContentObjectAttribute->DataText;
+                    $availableVariables[$attributeName] = trim(strip_tags($content->attribute('input')->ContentObjectAttribute->DataText));
                     break;
                 case 'ezdate' :
                 case 'ezdatetime' :
