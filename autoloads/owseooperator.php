@@ -220,6 +220,13 @@ class OWSeoOperator {
                         foreach ($exploded as $explodedVariable) {
                             if (array_key_exists($explodedVariable, $availableVariables) && $availableVariables[$explodedVariable] != '') {
                                 $variableReplaced = $availableVariables[$explodedVariable];
+                                if ($iniSeo->hasVariable('Rules_' . $classIdentifier, 'MaxLengthByAttribute')) {
+                                	$maxLengthAttributeValues = $iniSeo->variable('Rules_' . $classIdentifier, 'MaxLengthByAttribute');
+                                	 
+                                	if (isset($maxLengthAttributeValues[ $explodedVariable ])) {
+                                		$variableReplaced = substr($variableReplaced, 0, $maxLengthAttributeValues[ $explodedVariable ]);
+                                	}
+                                }
                                 $seoString = str_replace($charVariableStart . $variable . $charVariableEnd, $variableReplaced, $seoString);
                                 ezDebug::writeDebug("OwSeo : Replace $variable by $variableReplaced");
                                 break;
