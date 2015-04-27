@@ -175,8 +175,10 @@ class OWSeoOperator {
         }
 
         // Available variables from the content or from general settings
-        foreach ($iniSeo->group('GeneralVariables') as $k => $v) {
-            $availableVariables[$k] = $v;
+        if ($iniSeo->hasGroup('GeneralVariables')) {
+            foreach ($iniSeo->group('GeneralVariables') as $k => $v) {
+                $availableVariables[$k] = $v;
+            }
         }
         $availableVariables[$seoSettings['PathVarName']] = implode($seoSettings['PathStringSeparator'], $path);
     	foreach ( array_keys($dataMap) as $attributeName ) {
